@@ -3,7 +3,7 @@ package main.java.restaurante.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriaMenu implements ItemMenu {
+public class CategoriaMenu extends ItemMenu {
     private String nombre;
     private List<ItemMenu> items;
 

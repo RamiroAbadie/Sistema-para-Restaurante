@@ -3,7 +3,7 @@ package main.java.restaurante.menu;
 import java.math.BigDecimal;
 import java.util.Set;
 
-public class Producto implements ItemMenu {
+public class Producto extends ItemMenu {
     private String nombre;
     private String descripcion;
     private BigDecimal precio;

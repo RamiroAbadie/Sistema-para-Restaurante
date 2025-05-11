@@ -1,5 +1,5 @@
 package main.java.restaurante.menu;
 
-public interface ItemMenu {
-    void mostrar();
+public abstract class ItemMenu {
+    public abstract void mostrar();
 }
