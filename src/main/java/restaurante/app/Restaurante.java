@@ -43,8 +43,8 @@ public class Restaurante {
         gestorPedidos.agregarProductoAlPedido(pedido, producto, cantidad);
     }
 
-    public void avanzarEstadoPedido(Pedido pedido, Notificador notificador) {
-        gestorPedidos.avanzarEstadoPedido(pedido, notificador);
+    public void avanzarEstadoPedido(Pedido pedido) {
+        gestorPedidos.avanzarEstadoPedido(pedido);
     }
 
     public void registrarCliente(Cliente cliente) {

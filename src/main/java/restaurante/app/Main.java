@@ -45,10 +45,10 @@ public class Main {
         cliente.pagarPedido(pedido, tarjeta, notificador);
 
         // === Avanzar estado y notificar ===
-        restaurante.avanzarEstadoPedido(pedido, notificador); // En preparación
-        restaurante.avanzarEstadoPedido(pedido, notificador); // Listo para entregar
-        restaurante.avanzarEstadoPedido(pedido, notificador); // Entregado
-        restaurante.avanzarEstadoPedido(pedido, notificador); // No puede avanzar más
+        restaurante.avanzarEstadoPedido(pedido); // En preparación
+        restaurante.avanzarEstadoPedido(pedido); // Listo para entregar
+        restaurante.avanzarEstadoPedido(pedido); // Entregado
+        restaurante.avanzarEstadoPedido(pedido); // No puede avanzar más
         //TODO
         // Vuelve a mandar una notificacion de entregado, no se porque, revisar
 

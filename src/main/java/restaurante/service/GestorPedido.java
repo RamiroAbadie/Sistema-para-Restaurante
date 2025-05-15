@@ -12,6 +12,7 @@ import java.util.List;
 public class GestorPedido {
     private static GestorPedido instancia;
     private List<Pedido> pedidos;
+    private Notificador notificador;
 
     private GestorPedido() {
         this.pedidos = new ArrayList<>();
@@ -30,7 +31,7 @@ public class GestorPedido {
         return pedido;
     }
 
-    public void avanzarEstadoPedido(Pedido pedido, Notificador notificador) {
+    public void avanzarEstadoPedido(Pedido pedido) {
         pedido.avanzarEstado();
         notificador.enviarNotificacion(pedido);
     }
