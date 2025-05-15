@@ -5,10 +5,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Factura {
+    private static int contadorFacturas = 1;
+    private final int numeroFactura;
     private Pedido pedido;
     private LocalDateTime fechaEmision;
 
     public Factura(Pedido pedido) {
+        this.numeroFactura = contadorFacturas++;
         this.pedido = pedido;
         this.fechaEmision = LocalDateTime.now();
     }

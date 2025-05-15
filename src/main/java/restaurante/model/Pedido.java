@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
+    private static int contadorPedidos = 1;
     private final int numeroOrden;
     private EstadoPedido estado;
     private List<ProductoPedido> productos;
 
-    public Pedido(int numeroOrden, EstadoPedido estadoInicial) {
-        this.numeroOrden = numeroOrden;
+    public Pedido(EstadoPedido estadoInicial) {
+        this.numeroOrden = contadorPedidos++;
         this.estado = estadoInicial;
         this.productos = new ArrayList<>();
     }
