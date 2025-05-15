@@ -18,9 +18,10 @@ public class Factura {
 
     public void mostrar() {
         System.out.println("\n===== FACTURA =====");
-        System.out.println("Fecha: " + fechaEmision.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
-        System.out.println("Pedido N°: " + pedido.getNumeroOrden());
-        System.out.println("Estado actual: " + pedido.getEstadoActual());
+        System.out.println("Numero de factura: " + this.numeroFactura);
+        System.out.println("Fecha: " + this.fechaEmision.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        System.out.println("Pedido N°: " + this.pedido.getNumeroOrden());
+        System.out.println("Estado actual: " + this.pedido.getEstadoActual());
         System.out.println("Productos:");
 
         BigDecimal total = BigDecimal.ZERO;
