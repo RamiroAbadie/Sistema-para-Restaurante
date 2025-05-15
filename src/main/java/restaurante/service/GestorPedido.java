@@ -9,23 +9,23 @@ import main.java.restaurante.strategy.Notificador;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestorPedidos {
-    private static GestorPedidos instancia;
+public class GestorPedido {
+    private static GestorPedido instancia;
     private List<Pedido> pedidos;
 
-    private GestorPedidos() {
+    private GestorPedido() {
         this.pedidos = new ArrayList<>();
     }
 
-    public static GestorPedidos getInstancia() {
+    public static GestorPedido getInstancia() {
         if (instancia == null) {
-            instancia = new GestorPedidos();
+            instancia = new GestorPedido();
         }
         return instancia;
     }
 
-    public Pedido crearPedido(int numero) {
-        Pedido pedido = new Pedido(numero, new EnEspera());
+    public Pedido crearPedido() {
+        Pedido pedido = new Pedido(new EnEspera());
         pedidos.add(pedido);
         return pedido;
     }

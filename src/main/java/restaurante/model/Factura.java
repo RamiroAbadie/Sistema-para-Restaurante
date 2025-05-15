@@ -17,7 +17,7 @@ public class Factura {
     }
 
     public void mostrar() {
-        System.out.println("\n===== FACTURA =====");
+        System.out.println("\n========= FACTURA =========");
         System.out.println("Numero de factura: " + this.numeroFactura);
         System.out.println("Fecha: " + this.fechaEmision.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
         System.out.println("Pedido N°: " + this.pedido.getNumeroOrden());
@@ -32,6 +32,6 @@ public class Factura {
         }
 
         System.out.println("Total: $" + total);
-        System.out.println("====================\n");
+        System.out.println("==========================\n");
     }
 }

@@ -1,9 +1,6 @@
 package main.java.restaurante.app;
 
-import main.java.restaurante.model.Cliente;
-import main.java.restaurante.model.Cupon;
-import main.java.restaurante.model.Pedido;
-import main.java.restaurante.model.Personal;
+import main.java.restaurante.model.*;
 import main.java.restaurante.menu.ItemMenu;
 import main.java.restaurante.menu.Producto;
 import main.java.restaurante.service.*;
@@ -12,16 +9,21 @@ import main.java.restaurante.strategy.Notificador;
 public class Restaurante {
     private static Restaurante instancia;
 
-    private final GestorPedidos gestorPedidos;
+    private final GestorPedido gestorPedidos;
     private final GestorClientes gestorClientes;
     private final GestorPersonal gestorPersonal;
     private final GestorMenu gestorMenu;
+    private final GestorFactura gestorFactura;
+    private final GestorReporte gestorReporte;
+
 
     private Restaurante() {
-        this.gestorPedidos = GestorPedidos.getInstancia();
+        this.gestorPedidos = GestorPedido.getInstancia();
         this.gestorClientes = GestorClientes.getInstancia();
         this.gestorPersonal = GestorPersonal.getInstancia();
         this.gestorMenu = GestorMenu.getInstancia();
+        this.gestorFactura = GestorFactura.getInstancia();
+        this.gestorReporte = GestorReporte.getInstancia();
     }
 
     public static Restaurante getInstancia() {
@@ -31,8 +33,8 @@ public class Restaurante {
         return instancia;
     }
 
-    public Pedido crearPedidoParaCliente(Cliente cliente, int numeroPedido) {
-        Pedido pedido = gestorPedidos.crearPedido(numeroPedido);
+    public Pedido crearPedidoParaCliente(Cliente cliente) {
+        Pedido pedido = gestorPedidos.crearPedido();
         gestorClientes.asignarPedido(cliente, pedido);
         return pedido;
     }
@@ -65,9 +67,27 @@ public class Restaurante {
         gestorMenu.mostrarMenu();
     }
 
-    // Getters
-    public GestorPedidos getGestorPedidos() { return gestorPedidos; }
+    public Factura generarFactura(Pedido pedido) {
+        return getGestorFactura().generarFactura(pedido);
+    }
+
+    public Reporte generarReporte() {
+        /* Aca le pasamos todos los pedidos pero a futuro se podria hacer una seleccion de
+        que pedidos queremos generar el reporte */
+        return getGestorReporte().generarReporte(gestorPedidos.getPedidos());
+    }
+
+
+    public GestorPedido getGestorPedidos() { return gestorPedidos; }
     public GestorClientes getGestorClientes() { return gestorClientes; }
     public GestorPersonal getGestorPersonal() { return gestorPersonal; }
     public GestorMenu getGestorMenu() { return gestorMenu; }
+    public GestorFactura getGestorFactura() {
+        return GestorFactura.getInstancia();
+    }
+
+    public GestorReporte getGestorReporte() {
+        return GestorReporte.getInstancia();
+    }
+
 }

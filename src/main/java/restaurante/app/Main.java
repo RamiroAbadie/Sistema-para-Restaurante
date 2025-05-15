@@ -34,7 +34,7 @@ public class Main {
         restaurante.asignarCupon(cliente, cupon);
 
         // === Crear pedido y agregar productos ===
-        Pedido pedido = restaurante.crearPedidoParaCliente(cliente, 1);
+        Pedido pedido = restaurante.crearPedidoParaCliente(cliente);
         restaurante.agregarProductoAlPedido(pedido, pizza, 2);
         restaurante.agregarProductoAlPedido(pedido, ensalada, 1);
 
@@ -51,5 +51,13 @@ public class Main {
         restaurante.avanzarEstadoPedido(pedido, notificador); // No puede avanzar más
         //TODO
         // Vuelve a mandar una notificacion de entregado, no se porque, revisar
+
+        // === Emitir factura ===
+        Factura factura = restaurante.generarFactura(pedido);
+        factura.mostrar();
+
+        // === Generar y mostrar reporte de ventas ===
+        Reporte reporteHoy = restaurante.generarReporte();
+        reporteHoy.mostrar();
     }
 }
