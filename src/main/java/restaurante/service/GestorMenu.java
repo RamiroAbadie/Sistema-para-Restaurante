@@ -6,10 +6,18 @@ import main.java.restaurante.menu.Menu;
 import java.util.List;
 
 public class GestorMenu {
+    private static GestorMenu instancia;
     private final Menu menu;
 
-    public GestorMenu() {
+    private GestorMenu() {
         this.menu = new Menu();
+    }
+
+    public static GestorMenu getInstancia() {
+        if (instancia == null) {
+            instancia = new GestorMenu();
+        }
+        return instancia;
     }
 
     public void agregarItemAlMenu(ItemMenu item) {

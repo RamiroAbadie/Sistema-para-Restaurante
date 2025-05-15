@@ -10,10 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GestorPedidos {
+    private static GestorPedidos instancia;
     private List<Pedido> pedidos;
 
-    public GestorPedidos() {
+    private GestorPedidos() {
         this.pedidos = new ArrayList<>();
+    }
+
+    public static GestorPedidos getInstancia() {
+        if (instancia == null) {
+            instancia = new GestorPedidos();
+        }
+        return instancia;
     }
 
     public Pedido crearPedido(int numero) {

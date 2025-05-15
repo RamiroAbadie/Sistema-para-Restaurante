@@ -18,10 +18,10 @@ public class Restaurante {
     private final GestorMenu gestorMenu;
 
     private Restaurante() {
-        this.gestorPedidos = new GestorPedidos();
-        this.gestorClientes = new GestorClientes();
-        this.gestorPersonal = new GestorPersonal();
-        this.gestorMenu = new GestorMenu();
+        this.gestorPedidos = GestorPedidos.getInstancia();
+        this.gestorClientes = GestorClientes.getInstancia();
+        this.gestorPersonal = GestorPersonal.getInstancia();
+        this.gestorMenu = GestorMenu.getInstancia();
     }
 
     public static Restaurante getInstancia() {

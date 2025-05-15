@@ -1,5 +1,6 @@
 package main.java.restaurante.service;
 
+import main.java.restaurante.app.Restaurante;
 import main.java.restaurante.model.Cliente;
 import main.java.restaurante.model.Cupon;
 import main.java.restaurante.model.Pedido;
@@ -8,10 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GestorClientes {
+    private static GestorClientes instancia;
     private List<Cliente> clientes;
 
-    public GestorClientes() {
+    private GestorClientes() {
         this.clientes = new ArrayList<>();
+    }
+
+    public static GestorClientes getInstancia() {
+        if (instancia == null) {
+            instancia = new GestorClientes();
+        }
+        return instancia;
     }
 
     public void registrarCliente(Cliente cliente) {

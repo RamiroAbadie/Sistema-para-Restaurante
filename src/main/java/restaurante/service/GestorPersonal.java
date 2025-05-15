@@ -6,10 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GestorPersonal {
+    private static GestorPersonal instancia;
     private List<Personal> empleados;
 
-    public GestorPersonal() {
+    private GestorPersonal() {
         this.empleados = new ArrayList<>();
+    }
+
+    public static GestorPersonal getInstancia() {
+        if (instancia == null) {
+            instancia = new GestorPersonal();
+        }
+        return instancia;
     }
 
     public void agregarEmpleado(Personal empleado) {
