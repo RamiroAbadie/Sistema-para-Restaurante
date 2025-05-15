@@ -7,6 +7,7 @@ import main.java.restaurante.model.Personal;
 import main.java.restaurante.menu.ItemMenu;
 import main.java.restaurante.menu.Producto;
 import main.java.restaurante.service.*;
+import main.java.restaurante.strategy.Notificador;
 
 public class Restaurante {
     private static Restaurante instancia;
@@ -40,7 +41,7 @@ public class Restaurante {
         gestorPedidos.agregarProductoAlPedido(pedido, producto, cantidad);
     }
 
-    public void avanzarEstadoPedido(Pedido pedido, main.java.restaurante.strategy.Notificador notificador) {
+    public void avanzarEstadoPedido(Pedido pedido, Notificador notificador) {
         gestorPedidos.avanzarEstadoPedido(pedido, notificador);
     }
 
