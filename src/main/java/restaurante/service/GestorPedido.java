@@ -5,6 +5,7 @@ import main.java.restaurante.menu.Producto;
 import main.java.restaurante.state.EnEspera;
 import main.java.restaurante.state.Entregado;
 import main.java.restaurante.strategy.Notificador;
+import main.java.restaurante.strategy.NotificadorApp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,10 @@ public class GestorPedido {
 
     private GestorPedido() {
         this.pedidos = new ArrayList<>();
+        /* Aca hay que ver si hacer una lista de notificadores en los que
+        se puedan guardar diferentes tipos de notificadores, por el momento
+        solo se puede uno que esta harcodeado aca */
+        this.notificador = new NotificadorApp();
     }
 
     public static GestorPedido getInstancia() {
