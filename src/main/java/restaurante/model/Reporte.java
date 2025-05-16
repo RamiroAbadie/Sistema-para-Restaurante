@@ -5,12 +5,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Reporte {
+    private static int contadorReportes = 1;
+    private final int numeroReporte;
     private final LocalDate fechaGeneracion;
     private final List<Pedido> pedidos;
     private final int cantidadPedidos;
     private final BigDecimal montoTotal;
 
     public Reporte(List<Pedido> pedidosEntregados) {
+        this.numeroReporte = contadorReportes++;
         this.fechaGeneracion = LocalDate.now();
         this.pedidos = pedidosEntregados;
         this.cantidadPedidos = pedidosEntregados.size();
@@ -31,5 +34,9 @@ public class Reporte {
         System.out.println("Cantidad de pedidos entregados: " + cantidadPedidos);
         System.out.println("Monto total recaudado: $" + montoTotal);
         System.out.println("==========================\n");
+    }
+
+    public int getNumeroReporte() {
+        return numeroReporte;
     }
 }

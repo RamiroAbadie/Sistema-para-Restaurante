@@ -34,4 +34,8 @@ public class Factura {
         System.out.println("Total: $" + total);
         System.out.println("==========================\n");
     }
+
+    public int getNumeroFactura() {
+        return numeroFactura;
+    }
 }

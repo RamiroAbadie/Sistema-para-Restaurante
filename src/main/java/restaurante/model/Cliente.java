@@ -2,6 +2,7 @@ package main.java.restaurante.model;
 
 import main.java.restaurante.strategy.MedioDePago;
 import main.java.restaurante.strategy.Notificador;
+import main.java.restaurante.strategy.TarjetaCredito;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,21 +22,25 @@ public class Cliente {
         this.pedidos = new ArrayList<>();
     }
 
-    public void asignarCupon(Cupon cupon) {
+    public void asignarCupon() {
+        // TODO: Aca estaria la logica de creacion de un cupon
+        Cupon cupon = new Cupon(0.15);
         this.cupon = cupon;
     }
 
-    public void agregarMedioDePago(MedioDePago medio) {
-        this.mediosDePago.add(medio);
+    public void agregarMedioDePago() {
+        // TODO: Aca se pide que se agregue un medio de pago
+        MedioDePago tarjeta = new TarjetaCredito("1234-5678-0000", "Lionel M.");
+        mediosDePago.add(tarjeta);
     }
 
     public void asignarPedido(Pedido pedido) {
         pedidos.add(pedido);
     }
 
-    public void pagarPedido(Pedido pedido, MedioDePago medio, Notificador notificador) {
-        if (!mediosDePago.contains(medio)) {
-            throw new IllegalArgumentException("El medio de pago no está registrado en el cliente.");
+    public void pagarPedido(Pedido pedido) {
+        if (mediosDePago.isEmpty()) {
+            throw new IllegalArgumentException("El cliente no tiene medios de pago disponible");
         }
 
         BigDecimal total = pedido.calcularTotal();
@@ -43,8 +48,8 @@ public class Cliente {
             total = cupon.aplicarDescuento(total);
         }
 
-        medio.pagar(pedido, total);
-        notificador.enviarNotificacion(pedido);
+        //TODO: Que seleccione un medio de pago
+        mediosDePago.getFirst().pagar(pedido, total);
     }
 
     public String getNombre() { return nombre; }

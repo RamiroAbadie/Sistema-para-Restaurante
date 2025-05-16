@@ -1,63 +1,59 @@
 package main.java.restaurante.app;
 
-import main.java.restaurante.menu.*;
 import main.java.restaurante.model.*;
-import main.java.restaurante.strategy.*;
 
-import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Restaurante restaurante = Restaurante.getInstancia();
 
         // === Crear y registrar cliente ===
-        Cliente cliente = new Cliente("Lionel Messi", "LeoMessi@InterMiami.com");
-        restaurante.registrarCliente(cliente);
+        restaurante.registrarCliente();
+
+        //Aca podemos usar esto para ver a los clientes (lista read only)
+        List<Cliente> clientes = restaurante.getClientes();
+        System.out.println("=== Email cliente creado: ===");
+        System.out.println(clientes.getFirst().getEmail());
+        System.out.println("======");
 
         // === Crear productos y agregarlos al menú ===
-        Producto pizza = new Producto("Pizza", "Muzzarella", BigDecimal.valueOf(3500), Set.of("gluten", "lactosa"));
-        Producto ensalada = new Producto("Ensalada César", "Con pollo", BigDecimal.valueOf(2800), Set.of("huevo"));
-
-        CategoriaMenu categoriaPlatos = new CategoriaMenu("Platos principales");
-        categoriaPlatos.agregarItem(pizza);
-        categoriaPlatos.agregarItem(ensalada);
-
-        restaurante.agregarItemAlMenu(categoriaPlatos);
+        restaurante.agregarItemAlMenu();
         restaurante.mostrarMenu();
 
         // === Crear medio de pago y cupón ===
-        MedioDePago tarjeta = new TarjetaCredito("1234-5678-0000", "Lionel M.");
-        cliente.agregarMedioDePago(tarjeta);
-
-        Cupon cupon = new Cupon(0.15); // 15% de descuento
-        restaurante.asignarCupon(cliente, cupon);
+        restaurante.agregarMedioDePago(clientes.getFirst().getEmail());
+        restaurante.asignarCupon(clientes.getFirst().getEmail());
 
         // === Crear pedido y agregar productos ===
-        Pedido pedido = restaurante.crearPedidoParaCliente(cliente);
-        restaurante.agregarProductoAlPedido(pedido, pizza, 2);
-        restaurante.agregarProductoAlPedido(pedido, ensalada, 1);
+        int nroDeOrden = restaurante.crearPedidoParaCliente(clientes.getFirst().getEmail());
+        restaurante.agregarProductoAlPedido(nroDeOrden, "pizza muzzarella", 2);
 
-        System.out.println("\nTotal del pedido (sin descuento): $" + pedido.calcularTotal());
+        System.out.println("\nTotal del pedido (sin descuento): $" + restaurante.devolverTotalPedido(nroDeOrden));
 
         // === Pagar y notificar ===
-        Notificador notificador = new NotificadorApp();
-        cliente.pagarPedido(pedido, tarjeta, notificador);
+        restaurante.clientePagarPedido(nroDeOrden, clientes.getFirst().getEmail());
+
+        // === Crear y agregar personal ===
+        restaurante.agregarPersonal();
+        List<Personal> empleados = restaurante.getEmpleados();
+        System.out.println("\n=== Nombre Personal (Mesero) creado: ===");
+        System.out.println(empleados.getFirst().getNombre());
+        System.out.println("======\n");
 
         // === Avanzar estado y notificar ===
-        restaurante.avanzarEstadoPedido(pedido); // En preparación
-        restaurante.avanzarEstadoPedido(pedido); // Listo para entregar
-        restaurante.avanzarEstadoPedido(pedido); // Entregado
-        restaurante.avanzarEstadoPedido(pedido); // No puede avanzar más
-        //TODO
-        // Vuelve a mandar una notificacion de entregado, no se porque, revisar
+        restaurante.avanzarEstadoPedido("Juan Mesero", nroDeOrden); // En preparación
+        restaurante.avanzarEstadoPedido("Juan Mesero", nroDeOrden); // Listo para entregar
+        restaurante.avanzarEstadoPedido("Juan Mesero", nroDeOrden); // Entregado
+        // Descomentar si se quiere probar avanzar pedido entregado:
+        //restaurante.avanzarEstadoPedido("Juan Mesero", nroDeOrden);
 
         // === Emitir factura ===
-        Factura factura = restaurante.generarFactura(pedido);
-        factura.mostrar();
+        int nroFactura = restaurante.generarFactura(nroDeOrden);
+        restaurante.mostrarFactura(nroFactura);
 
         // === Generar y mostrar reporte de ventas ===
-        Reporte reporteHoy = restaurante.generarReporte();
-        reporteHoy.mostrar();
+        int nroReporte = restaurante.generarReporte();
+        restaurante.mostrarReporte(nroReporte);
     }
 }
