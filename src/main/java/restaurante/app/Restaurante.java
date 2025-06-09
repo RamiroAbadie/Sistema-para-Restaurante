@@ -55,7 +55,7 @@ public class Restaurante {
     }
 
     public void avanzarEstadoPedido(String idEmpleado, int numeroOrden) {
-        gestorPersonal.avanzoPedido(idEmpleado, numeroOrden, gestorPedidos.getPedidoById(numeroOrden).getEstado());
+        gestorPersonal.avanzoPedido(idEmpleado, numeroOrden, gestorPedidos.getPedidoById(numeroOrden).getEstado().getNombreEstado());
         gestorPedidos.avanzarEstadoPedido(numeroOrden);
     }
 

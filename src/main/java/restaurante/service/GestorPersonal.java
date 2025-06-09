@@ -31,12 +31,8 @@ public class GestorPersonal {
         empleados.add(mesero);
     }
 
-    public void avanzoPedido(String idEmpleado, int nroOrden, EstadoPedido estadoPedido){
-        Personal personalBuscado = buscarEmpleadoPorId(idEmpleado);
-        if (personalBuscado == null) {
-            throw new NoSuchElementException("No se encontró al empleado con id: " + idEmpleado);
-        }
-        Log newLog = new Log(personalBuscado, nroOrden, estadoPedido);
+    public void avanzoPedido(String idEmpleado, int nroOrden, String estadoPedido){
+        Log newLog = new Log(idEmpleado, nroOrden, estadoPedido);
         logs.add(newLog);
     }
 

@@ -4,18 +4,18 @@ import main.java.restaurante.state.EstadoPedido;
 import main.java.restaurante.model.Personal;
 
 public class Log {
-    final Personal empleado;
-    final int nroOrden;
-    final EstadoPedido estadoPedido;
+    private final String idEmpleado;
+    private final int nroOrden;
+    private final String estadoPedido;
 
-    public Log(Personal empleado, int nroOrden, EstadoPedido estadoPedido) {
-        this.empleado = empleado;
+    public Log(String idEmpleado, int nroOrden, String estadoPedido) {
+        this.idEmpleado = idEmpleado;
         this.nroOrden = nroOrden;
         this.estadoPedido = estadoPedido;
     }
 
     public String getEmpleado() {
-        return empleado.getId();
+        return idEmpleado;
     }
 
     public int getNroOrden() {
@@ -23,6 +23,6 @@ public class Log {
     }
 
     public String getEstadoPedido() {
-        return estadoPedido.getNombreEstado();
+        return estadoPedido;
     }
 }

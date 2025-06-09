@@ -28,10 +28,12 @@ public class Factura {
         for (var pp : pedido.getProductos()) {
             BigDecimal subtotal = pp.calcularSubtotal();
             System.out.println("- " + pp.getProducto().getNombre() + " x" + pp.getCantidad() + ": $" + subtotal);
-            total = total.add(subtotal);
         }
 
-        System.out.println("Total: $" + total);
+        System.out.println("Descuento:");
+        System.out.println(pedido.getDescuentoAplicado());
+
+        System.out.println("Total: $" + pedido.calcularTotal());
         System.out.println("==========================\n");
     }
 

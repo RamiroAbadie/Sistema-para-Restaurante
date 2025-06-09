@@ -11,12 +11,14 @@ public class Pedido {
     private static int contadorPedidos = 1;
     private final int numeroOrden;
     private EstadoPedido estado;
+    private double descuentoAplicado;
     private List<ProductoPedido> productos;
 
     public Pedido(EstadoPedido estadoInicial) {
         this.numeroOrden = contadorPedidos++;
         this.estado = estadoInicial;
         this.productos = new ArrayList<>();
+        this.descuentoAplicado = 0;
     }
 
     public void agregarProducto(Producto producto, int cantidad) {
@@ -42,7 +44,8 @@ public class Pedido {
         for (ProductoPedido pp : productos) {
             total = total.add(pp.calcularSubtotal());
         }
-        return total;
+        BigDecimal descuento = total.multiply(BigDecimal.valueOf(descuentoAplicado));
+        return total.subtract(descuento);
     }
 
     public void avanzarEstado() {
@@ -51,6 +54,10 @@ public class Pedido {
 
     public void setEstado(EstadoPedido nuevoEstado) {
         this.estado = nuevoEstado;
+    }
+
+    public void setDescuentoAplicado(double descuentoAplicado) {
+        this.descuentoAplicado = descuentoAplicado;
     }
 
     public String getEstadoActual() {
@@ -67,5 +74,9 @@ public class Pedido {
 
     public EstadoPedido getEstado() {
         return estado;
+    }
+
+    public double getDescuentoAplicado() {
+        return descuentoAplicado;
     }
 }

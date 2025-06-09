@@ -46,6 +46,7 @@ public class Cliente {
         BigDecimal total = pedido.calcularTotal();
         if (cupon != null) {
             total = cupon.aplicarDescuento(total);
+            pedido.setDescuentoAplicado(cupon.getPorcentajeDescuento());
         }
 
         //TODO: Que seleccione un medio de pago
