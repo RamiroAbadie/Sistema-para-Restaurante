@@ -42,11 +42,21 @@ public class Main {
         System.out.println("======\n");
 
         // === Avanzar estado y notificar ===
-        restaurante.avanzarEstadoPedido("Juan Mesero", nroDeOrden); // En preparación
-        restaurante.avanzarEstadoPedido("Juan Mesero", nroDeOrden); // Listo para entregar
-        restaurante.avanzarEstadoPedido("Juan Mesero", nroDeOrden); // Entregado
+        restaurante.avanzarEstadoPedido("ABC123", nroDeOrden); // En preparación
+        restaurante.avanzarEstadoPedido("ABC123", nroDeOrden); // Listo para entregar
+        restaurante.avanzarEstadoPedido("ABC123", nroDeOrden); // Entregado
         // Descomentar si se quiere probar avanzar pedido entregado:
-        //restaurante.avanzarEstadoPedido("Juan Mesero", nroDeOrden);
+        //restaurante.avanzarEstadoPedido("ABC123", nroDeOrden);
+
+        System.out.println("\n=== Logs (Quien avanzo que pedido y de que estado): ===");
+        List<Log> logs = restaurante.getLogs();
+        for(Log l :logs){
+            System.out.println("==========");
+            System.out.println("Empleado: " + l.getEmpleado());
+            System.out.println("nroOrden: " + l.getNroOrden());
+            System.out.println("Avanzo de estado: " + l.getEstadoPedido());
+            System.out.println("==========");
+        }
 
         // === Emitir factura ===
         int nroFactura = restaurante.generarFactura(nroDeOrden);

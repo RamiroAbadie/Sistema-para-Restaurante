@@ -50,16 +50,16 @@ public class Restaurante {
         gestorPedidos.agregarProductoAlPedido(numeroOrden, producto, cantidad);
     }
 
-    public void agregarPersonal(){
+    public void agregarPersonal() {
         gestorPersonal.agregarEmpleado();
     }
 
-    public void avanzarEstadoPedido(String nombrePersonal, int numeroOrden) {
-        gestorPersonal.avanzoPedido(nombrePersonal, numeroOrden);
+    public void avanzarEstadoPedido(String idEmpleado, int numeroOrden) {
+        gestorPersonal.avanzoPedido(idEmpleado, numeroOrden, gestorPedidos.getPedidoById(numeroOrden).getEstado());
         gestorPedidos.avanzarEstadoPedido(numeroOrden);
     }
 
-    public BigDecimal devolverTotalPedido(int numeroOrden){
+    public BigDecimal devolverTotalPedido(int numeroOrden) {
         return gestorPedidos.getTotalPedido(numeroOrden);
     }
 
@@ -67,9 +67,11 @@ public class Restaurante {
         gestorClientes.registrarCliente();
     }
 
-    public void agregarMedioDePago(String email) {gestorClientes.agregarMedioDePago(email);}
+    public void agregarMedioDePago(String email) {
+        gestorClientes.agregarMedioDePago(email);
+    }
 
-    public void clientePagarPedido(int numeroOrden, String email){
+    public void clientePagarPedido(int numeroOrden, String email) {
         gestorClientes.clientePagarPedido(gestorPedidos.getPedidoById(numeroOrden), email);
     }
 
@@ -90,7 +92,7 @@ public class Restaurante {
         return gestorFactura.generarFactura(gestorPedidos.getPedidoById(numeroOrden));
     }
 
-    public void mostrarFactura(int numeroFactura){
+    public void mostrarFactura(int numeroFactura) {
         gestorFactura.mostrarFacturaPorId(numeroFactura);
     }
 
@@ -101,7 +103,7 @@ public class Restaurante {
         return gestorReporte.generarReporte(gestorPedidos.getPedidos());
     }
 
-    public void mostrarReporte(int numeroReporte){
+    public void mostrarReporte(int numeroReporte) {
         gestorReporte.mostrarReportePorId(numeroReporte);
     }
 
@@ -113,8 +115,11 @@ public class Restaurante {
         return gestorMenu.getItems();
     }
 
-    public List<Personal> getEmpleados(){
+    public List<Personal> getEmpleados() {
         return gestorPersonal.getEmpleados();
     }
 
+    public List<Log> getLogs() {
+        return gestorPersonal.getLogs();
+    }
 }

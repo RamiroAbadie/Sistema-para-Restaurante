@@ -1,21 +1,21 @@
 package main.java.restaurante.service;
 
+import main.java.restaurante.model.Log;
 import main.java.restaurante.model.Mesero;
 import main.java.restaurante.model.Personal;
+import main.java.restaurante.state.EstadoPedido;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GestorPersonal {
     private static GestorPersonal instancia;
     private List<Personal> empleados;
 
-    private Set<String> logs;
+    private List<Log> logs;
 
     private GestorPersonal() {
         this.empleados = new ArrayList<>();
+        this.logs = new ArrayList<>();
     }
 
     public static GestorPersonal getInstancia() {
@@ -31,19 +31,27 @@ public class GestorPersonal {
         empleados.add(mesero);
     }
 
-    public void avanzoPedido(String nombreEmpleado, int nroOrden){
-        //TODO Aca se buscaria al empleado y se agregaria a un log junto con el pedido que avanzo
+    public void avanzoPedido(String idEmpleado, int nroOrden, EstadoPedido estadoPedido){
+        Personal personalBuscado = buscarEmpleadoPorId(idEmpleado);
+        if (personalBuscado == null) {
+            throw new NoSuchElementException("No se encontró al empleado con id: " + idEmpleado);
+        }
+        Log newLog = new Log(personalBuscado, nroOrden, estadoPedido);
+        logs.add(newLog);
     }
 
-    private Personal buscarEmpleadoPorId(String id) {
+    private Personal buscarEmpleadoPorId(String idEmpleado) {
         for (Personal p : empleados) {
-            if (p.getId().equalsIgnoreCase(id)) {
+            if (p.getId().equalsIgnoreCase(idEmpleado)) {
                 return p;
             }
         }
         return null;
     }
 
+    public List<Log> getLogs() {
+        return Collections.unmodifiableList(logs);
+    }
     public List<Personal> getEmpleados() {
         return Collections.unmodifiableList(empleados);
     }
