@@ -111,10 +111,6 @@ public class Restaurante {
         return gestorClientes.getClientes();
     }
 
-    public List<ItemMenu> getItemMenu() {
-        return gestorMenu.getItems();
-    }
-
     public List<Personal> getEmpleados() {
         return gestorPersonal.getEmpleados();
     }

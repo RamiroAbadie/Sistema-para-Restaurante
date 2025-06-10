@@ -4,6 +4,7 @@ import main.java.restaurante.model.Factura;
 import main.java.restaurante.model.Pedido;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -46,6 +47,6 @@ public class GestorFactura {
         return null;
     }
     public List<Factura> getFacturasEmitidas() {
-        return facturas;
+        return  Collections.unmodifiableList(facturas);
     }
 }

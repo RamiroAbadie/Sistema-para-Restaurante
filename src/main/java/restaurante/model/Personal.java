@@ -10,10 +10,6 @@ public abstract class Personal {
         this.id = id;
     }
 
-    public void avanzarPedido(Pedido pedido) {
-        //TODO: Aca iria logica segun rol
-    }
-
     public void atenderPedido(Pedido pedido) {
         // lógica opcional según rol
     }

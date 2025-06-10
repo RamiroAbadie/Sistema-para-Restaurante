@@ -74,7 +74,7 @@ public class GestorClientes {
         return null;
     }
 
-    public static List<Cliente> getClientes() {
+    public List<Cliente> getClientes() {
         return Collections.unmodifiableList(clientes);
     }
 }

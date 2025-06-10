@@ -8,7 +8,7 @@ public class Factura {
     private static int contadorFacturas = 1;
     private final int numeroFactura;
     private Pedido pedido;
-    private LocalDateTime fechaEmision;
+    private final LocalDateTime fechaEmision;
 
     public Factura(Pedido pedido) {
         this.numeroFactura = contadorFacturas++;
