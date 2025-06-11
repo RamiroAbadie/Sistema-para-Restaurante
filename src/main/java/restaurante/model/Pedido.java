@@ -57,7 +57,12 @@ public class Pedido {
     }
 
     public void setDescuentoAplicado(double descuentoAplicado) {
-        this.descuentoAplicado = descuentoAplicado;
+        if (descuentoAplicado>0){
+            this.descuentoAplicado += descuentoAplicado;
+        }
+        else{
+            this.descuentoAplicado = descuentoAplicado;
+        }
     }
 
     public String getEstadoActual() {

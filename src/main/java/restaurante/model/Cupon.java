@@ -9,9 +9,8 @@ public class Cupon {
         this.porcentajeDescuento = porcentajeDescuento;
     }
 
-    public BigDecimal aplicarDescuento(BigDecimal total) {
-        BigDecimal descuento = total.multiply(BigDecimal.valueOf(porcentajeDescuento));
-        return total.subtract(descuento);
+    public void aplicarDescuento(Pedido pedido) {
+        pedido.setDescuentoAplicado(this.porcentajeDescuento);
     }
 
     public double getPorcentajeDescuento() {

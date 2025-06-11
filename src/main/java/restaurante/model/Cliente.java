@@ -1,8 +1,6 @@
 package main.java.restaurante.model;
 
-import main.java.restaurante.strategy.MedioDePago;
-import main.java.restaurante.strategy.Notificador;
-import main.java.restaurante.strategy.TarjetaCredito;
+import main.java.restaurante.strategy.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,7 +28,9 @@ public class Cliente {
 
     public void agregarMedioDePago() {
         // TODO: Aca se pide que se agregue un medio de pago
+        MedioDePago efectivo = new Efectivo(Moneda.ARS$);
         MedioDePago tarjeta = new TarjetaCredito("1234-5678-0000", "Lionel M.");
+        mediosDePago.add(efectivo);
         mediosDePago.add(tarjeta);
     }
 
@@ -45,12 +45,11 @@ public class Cliente {
 
         BigDecimal total = pedido.calcularTotal();
         if (cupon != null) {
-            total = cupon.aplicarDescuento(total);
-            pedido.setDescuentoAplicado(cupon.getPorcentajeDescuento());
+            cupon.aplicarDescuento(pedido);
         }
 
         //TODO: Que seleccione un medio de pago
-        mediosDePago.getFirst().pagar(pedido, total);
+        mediosDePago.getFirst().pagar(pedido);
     }
 
     public String getNombre() { return nombre; }
