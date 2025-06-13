@@ -29,9 +29,9 @@ public class GestorMenu {
         //TODO: Aca se deberia pedir al usuario ingresar los datos para crear producto con categoria
         CategoriaMenu categoriaPlatosPizzas = new CategoriaMenu("🍕 Pizzas 🍕");
         CategoriaMenu categoriaPlatosHamburguesa = new CategoriaMenu("🍔 Hamburguesas 🍔");
-        Producto pizzaMuzza = new Producto("Pizza Muzzarella", "Pizza de 8 porciones", BigDecimal.valueOf(3500), Set.of("gluten", "lactosa"));
-        Producto pizzaNapolitana = new Producto("Pizza Napolitana", "Pizza con salsa de tomate, mozzarella, tomate en rodajas y albahaca", BigDecimal.valueOf(4000), Set.of("gluten", "lactosa"));
-        Producto hamburguesaCompleta = new Producto("Hamburguesa Completa", "Hamburguesa con carne, lechuga, tomate, cebolla y papas fritas", BigDecimal.valueOf(3800), Set.of("gluten", "lactosa"));
+        Producto pizzaMuzza = new Producto("Pizza Muzzarella", "Pizza de 8 porciones", BigDecimal.valueOf(3500), Set.of("gluten", "lactosa"), 20);
+        Producto pizzaNapolitana = new Producto("Pizza Napolitana", "Pizza con salsa de tomate, mozzarella, tomate en rodajas y albahaca", BigDecimal.valueOf(4000), Set.of("gluten", "lactosa"), 20);
+        Producto hamburguesaCompleta = new Producto("Hamburguesa Completa", "Hamburguesa con carne, lechuga, tomate, cebolla y papas fritas", BigDecimal.valueOf(3800), Set.of("gluten", "lactosa"), 10);
         categoriaPlatosPizzas.agregarItem(pizzaMuzza);
         categoriaPlatosPizzas.agregarItem(pizzaNapolitana);
         categoriaPlatosHamburguesa.agregarItem(hamburguesaCompleta);

@@ -17,4 +17,9 @@ public class EnPreparacion extends EstadoPedido {
     public String getNombreEstado() {
         return "🧑‍🍳 En preparación";
     }
+
+    @Override
+    public Float getTiempoEspera(Integer cantidadPedidos) {
+        return cantidadPedidos + 10f;
+    }
 }

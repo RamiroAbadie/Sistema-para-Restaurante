@@ -22,4 +22,9 @@ public class EnEspera extends EstadoPedido {
     public String getNombreEstado() {
         return "👌 En espera";
     }
+
+    @Override
+    public Float getTiempoEspera(Integer cantidadPedidos) {
+        return (cantidadPedidos >= 10) ? 5 + (cantidadPedidos / 10) * 20 : 5.0F;
+    }
 }

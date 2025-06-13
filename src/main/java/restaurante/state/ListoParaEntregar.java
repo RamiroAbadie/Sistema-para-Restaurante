@@ -15,4 +15,9 @@ public class ListoParaEntregar extends EstadoPedido {
     public String getNombreEstado() {
         return "🛵 Listo para entregar";
     }
+
+    @Override
+    public Float getTiempoEspera(Integer cantidadPedidos) {
+        return cantidadPedidos + 10f;
+    }
 }

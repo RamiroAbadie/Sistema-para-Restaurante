@@ -52,10 +52,11 @@ public class Restaurante {
         return pedido.getNumeroOrden();
     }
 
-    public int crearPedidoProgramadoParaCliente(String email, LocalDateTime horarioProgramado) {
+    //Devuelve Pedido solo para prueba, si no deberia ser int (nroOrden)
+    public Pedido crearPedidoProgramadoParaCliente(String email, LocalDateTime horarioProgramado) {
         Pedido pedido = gestorPedidos.crearPedidoProgramado(horarioProgramado);
         gestorClientes.asignarPedido(email, pedido);
-        return pedido.getNumeroOrden();
+        return pedido;
     }
 
     //Devuelve Pedido solo para prueba, si no void
@@ -78,6 +79,10 @@ public class Restaurante {
     public void avanzarEstadoPedido(String idEmpleado, int numeroOrden) {
         gestorPersonal.avanzoPedido(idEmpleado, numeroOrden, gestorPedidos.getPedidoById(numeroOrden).getEstado().getNombreEstado());
         gestorPedidos.avanzarEstadoPedido(numeroOrden);
+    }
+
+    public Float getTiempoDeEspera(int numeroOrden) {
+        return gestorPedidos.getTiempoEsperaPedido(numeroOrden, this.plataforma);
     }
 
     public BigDecimal devolverTotalPedido(int numeroOrden) {

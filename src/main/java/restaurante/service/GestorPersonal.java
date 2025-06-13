@@ -28,7 +28,9 @@ public class GestorPersonal {
     public void agregarEmpleado() {
         //TODO: Aca se deberia pedir al usuario ingresar los datos del personal a registar?
         Mesero mesero = new Mesero("Juan Mesero", "ABC123");
+        Mesero mesero2 = new Mesero("Rocio Mesera", "DEF456");
         empleados.add(mesero);
+        empleados.add(mesero2);
     }
 
     public void avanzoPedido(String idEmpleado, int nroOrden, String estadoPedido){

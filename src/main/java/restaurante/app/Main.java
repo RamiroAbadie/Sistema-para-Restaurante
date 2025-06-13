@@ -22,6 +22,14 @@ public class Main {
         System.out.println(clientes.getFirst().getEmail());
         System.out.println("======");
 
+        // === Crear y agregar personal ===
+        restaurante.agregarPersonal();
+        List<Personal> empleados = restaurante.getEmpleados();
+        System.out.println("\n=== Personal (Mesero) creado (solo el primero): ===");
+        System.out.println("Nombre: " + empleados.getFirst().getNombre());
+        System.out.println("Legajo/Id: " + empleados.getFirst().getId());
+        System.out.println("======\n");
+
         // === Crear productos y agregarlos al menú ===
         restaurante.agregarItemAlMenu();
         restaurante.mostrarMenu();
@@ -36,22 +44,55 @@ public class Main {
         restaurante.agregarProductoAlPedido(nroDeOrdenA, "pizza muzzarella", 2);
         restaurante.agregarProductoAlPedido(nroDeOrdenA, "Pizza Napolitana", 1);
 
+        System.out.println("\n=== Notificaciones avance de pedidos relleno ===");
+        // === Aa (relleno) ===
+        int nroDeOrdenAa = restaurante.crearPedidoParaCliente(clientes.getFirst().getEmail());
+        restaurante.agregarProductoAlPedido(nroDeOrdenAa, "pizza muzzarella", 4);
+        restaurante.agregarProductoAlPedido(nroDeOrdenAa, "Pizza Napolitana", 1);
+        restaurante.avanzarEstadoPedido("DEF456", nroDeOrdenAa); // En preparación
+
+        // === Ab (relleno) ===
+        int nroDeOrdenAb = restaurante.crearPedidoParaCliente(clientes.getFirst().getEmail());
+        restaurante.agregarProductoAlPedido(nroDeOrdenAb, "pizza muzzarella", 5);
+        restaurante.agregarProductoAlPedido(nroDeOrdenAb, "Hamburguesa Completa", 5);
+        restaurante.avanzarEstadoPedido("DEF456", nroDeOrdenAb); // En preparación
+        // === Ac (relleno) ===
+        int nroDeOrdenAc = restaurante.crearPedidoParaCliente(clientes.getFirst().getEmail());
+        restaurante.agregarProductoAlPedido(nroDeOrdenAc, "pizza muzzarella", 5);
+        restaurante.agregarProductoAlPedido(nroDeOrdenAc, "Pizza Napolitana", 5);
+        restaurante.avanzarEstadoPedido("DEF456", nroDeOrdenAc); // En preparación
+
+        System.out.println("===================================================");
         // === B (Pedido para cancelar)===
         int nroDeOrdenB = restaurante.crearPedidoParaCliente(clientes.getFirst().getEmail());
         restaurante.agregarProductoAlPedido(nroDeOrdenB, "Hamburguesa Completa", 2);
 
         // === C (Pedido programado para dentro de 1 min)===
         LocalDateTime horarioProgramado = LocalDateTime.now().plusSeconds(5);
-        int nroDeOrdenC = restaurante.crearPedidoProgramadoParaCliente(clientes.getFirst().getEmail(), horarioProgramado);
-        restaurante.agregarProductoAlPedido(nroDeOrdenC, "Pizza Muzzarella", 1);
-        restaurante.agregarProductoAlPedido(nroDeOrdenC, "Hamburguesa Completa", 1);
+        /* ⚠️ Esta devolviendo Pedido solo para hacer esta prueba, si no deberia ser int (nroOrden) ⚠️
+            (ROMPE ENCAPSULAMIENTO)
+        */
+        Pedido pedidoProgramado = restaurante.crearPedidoProgramadoParaCliente(clientes.getFirst().getEmail(), horarioProgramado);
+        restaurante.agregarProductoAlPedido(pedidoProgramado.getNumeroOrden(), "Pizza Muzzarella", 1);
+        restaurante.agregarProductoAlPedido(pedidoProgramado.getNumeroOrden(), "Hamburguesa Completa", 1);
 
         System.out.println("\n=== Comprobamos creacion pedidoA: ===");
         System.out.println("Total del pedidoA (recien creado) (sin descuento): $" + restaurante.devolverTotalPedido(nroDeOrdenA));
         System.out.println("\n=== Comprobamos creacion pedidoB: ===");
         System.out.println("Total del pedidoB (recien creado) (sin descuento): $" + restaurante.devolverTotalPedido(nroDeOrdenB));
         System.out.println("\n=== Comprobamos creacion pedidoC: ===");
-        System.out.println("Total del pedidoC (recien PROGRAMADO) (sin descuento): $" + restaurante.devolverTotalPedido(nroDeOrdenC));
+        System.out.println("Total del pedidoC (recien PROGRAMADO) (sin descuento): $" + restaurante.devolverTotalPedido(pedidoProgramado.getNumeroOrden()));
+
+        // === Tiempo de espera pedido Ab ===
+        System.out.println("\n=== Tiempo de espera pedido Ab: ===");
+        Float tiempoEsperaAb = restaurante.getTiempoDeEspera(nroDeOrdenAb);
+        System.out.println(tiempoEsperaAb);
+        System.out.println("==============");
+        // === Tiempo de espera pedido Ac ===
+        System.out.println("=== Tiempo de espera pedido Ac: ===");
+        Float tiempoEspera = restaurante.getTiempoDeEspera(nroDeOrdenAc);
+        System.out.println(tiempoEspera);
+        System.out.println("==============");
 
         // === Cancelar pedido B ===
         /* ⚠️ Esta devolviendo Pedido solo para hacer esta prueba, si no deberia ser void ⚠️
@@ -61,14 +102,6 @@ public class Main {
         Pedido pedidoBTest = restaurante.cancelarPedido(nroDeOrdenB);
         System.out.println(pedidoBTest.getEstado().getNombreEstado());
         System.out.println("===============\n");
-
-        // === Crear y agregar personal ===
-        restaurante.agregarPersonal();
-        List<Personal> empleados = restaurante.getEmpleados();
-        System.out.println("\n=== Personal (Mesero) creado: ===");
-        System.out.println("Nombre: " + empleados.getFirst().getNombre());
-        System.out.println("Legajo/Id: " + empleados.getFirst().getId());
-        System.out.println("======\n");
 
         // === Avanzar estado y notificar ; Agregar productos ===
         System.out.println("=== Intentamos agregar producto a pedidoA (1 Pizza Napo): ===");
@@ -107,12 +140,12 @@ public class Main {
 
         try {
             System.out.println("\n=== Estado pedidoC (Pedido que programamos para dentro de 5 segundos): ===");
-            System.out.println(restaurante.getPedidos().get(2).getEstado().getNombreEstado());
+            System.out.println(pedidoProgramado.getEstado().getNombreEstado());
             System.out.println("=== Estamos esperando 10 segundos antes de terminar el main thread: ===");
             Thread.sleep(10000);
             System.out.println("=== FIN de los 10 secs ===");
             System.out.println("\n=== Comprobamos estado pedidoC (Pedido que programamos para dentro de 5 segundos): ===");
-            System.out.println(restaurante.getPedidos().get(2).getEstado().getNombreEstado());
+            System.out.println(pedidoProgramado.getEstado().getNombreEstado());
             // Aca se podria mover al pedidoC de estados hasta entregarlo y bla bla bla
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

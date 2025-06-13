@@ -10,4 +10,6 @@ public abstract class EstadoPedido {
     public boolean puedeCancelar(Pedido pedido) { return false; } // default: no
     public boolean puedeAgregarProducto() { return false; } // default: no
     public abstract String getNombreEstado();
+
+    public Float getTiempoEspera(Integer cantidadPedidos) { return 0.0F; };
 }

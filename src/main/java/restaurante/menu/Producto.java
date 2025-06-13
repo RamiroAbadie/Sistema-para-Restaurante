@@ -9,11 +9,14 @@ public class Producto extends ItemMenu {
     private BigDecimal precio;
     private Set<String> alergenos;
 
-    public Producto(String nombre, String descripcion, BigDecimal precio, Set<String> alergenos) {
+    private int tiempoPreparacionMin;
+
+    public Producto(String nombre, String descripcion, BigDecimal precio, Set<String> alergenos, int tiempoPreparacionMin) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.alergenos = alergenos;
+        this.tiempoPreparacionMin = tiempoPreparacionMin;
     }
 
     @Override
@@ -31,5 +34,9 @@ public class Producto extends ItemMenu {
 
     public Set<String> getAlergenos() {
         return alergenos;
+    }
+
+    public int getTiempoPreparacionMin() {
+        return tiempoPreparacionMin;
     }
 }

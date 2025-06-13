@@ -1,8 +1,8 @@
 package main.java.restaurante.model;
 
+import main.java.restaurante.app.Plataforma;
 import main.java.restaurante.menu.Producto;
-import main.java.restaurante.state.EstadoPedido;
-import main.java.restaurante.state.Programado;
+import main.java.restaurante.state.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -121,4 +121,28 @@ public class Pedido {
     public LocalDateTime getHorarioProgramado() {
         return horarioProgramado;
     }
+
+    public Float getTiempoEspera(Integer cantidadPedidos, Plataforma plataforma) {
+        // Estado: En espera
+        if (estado instanceof EnEspera) {
+            return estado.getTiempoEspera(cantidadPedidos);
+        }
+
+        // Estado: En preparación
+        if (estado instanceof EnPreparacion) {
+            int tiempo = productos.stream()
+                    .mapToInt(pp -> pp.getProducto().getTiempoPreparacionMin() * pp.getCantidad())
+                    .sum();
+            return (float) tiempo;
+        }
+
+        // Estado: Listo para entregar
+        if (estado instanceof ListoParaEntregar) {
+            return plataforma == Plataforma.APP ? 15.0F : 0.0F;
+        }
+
+        // Cualquier otro estado (Entregado, Cancelado, etc.)
+        return 0.0F;
+    }
+
 }

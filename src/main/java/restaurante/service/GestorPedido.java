@@ -1,5 +1,6 @@
 package main.java.restaurante.service;
 
+import main.java.restaurante.app.Plataforma;
 import main.java.restaurante.factory.Notificador;
 import main.java.restaurante.factory.PlataformaFactory;
 import main.java.restaurante.factory.TipoNotificador;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class GestorPedido {
     private static GestorPedido instancia;
@@ -85,6 +87,21 @@ public class GestorPedido {
         }
         pedido.agregarProducto(producto, cantidad);
     }
+
+    public Float getTiempoEsperaPedido(int numeroOrden, Plataforma plataforma) {
+        Optional<Pedido> optionalPedido = pedidos.stream()
+                .filter(p -> p.getNumeroOrden() == numeroOrden)
+                .findFirst();
+
+        if (optionalPedido.isEmpty()) {
+            throw new IllegalArgumentException("Pedido no encontrado con número de orden: " + numeroOrden);
+        }
+
+        Pedido pedido = optionalPedido.get();
+        int cantidadTotalPedidos = pedidos.size();
+        return pedido.getTiempoEspera(cantidadTotalPedidos, plataforma);
+    }
+
 
     public BigDecimal getTotalPedido(int numeroOrden) {
         Pedido pedido = buscarPedidoPorId(numeroOrden);
