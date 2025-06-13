@@ -4,5 +4,5 @@ import main.java.restaurante.model.Pedido;
 import java.math.BigDecimal;
 
 public interface MedioDePago {
-    void pagar(Pedido pedido);
+    boolean pagar(Pedido pedido);
 }

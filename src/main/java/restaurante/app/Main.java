@@ -43,8 +43,8 @@ public class Main {
         // === C (Pedido programado para dentro de 1 min)===
         LocalDateTime horarioProgramado = LocalDateTime.now().plusSeconds(5);
         int nroDeOrdenC = restaurante.crearPedidoProgramadoParaCliente(clientes.getFirst().getEmail(), horarioProgramado);
-        restaurante.agregarProductoAlPedido(nroDeOrdenB, "Pizza Muzzarella", 1);
-        restaurante.agregarProductoAlPedido(nroDeOrdenB, "Hamburguesa Completa", 1);
+        restaurante.agregarProductoAlPedido(nroDeOrdenC, "Pizza Muzzarella", 1);
+        restaurante.agregarProductoAlPedido(nroDeOrdenC, "Hamburguesa Completa", 1);
 
         System.out.println("\n=== Comprobamos creacion pedidoA: ===");
         System.out.println("Total del pedidoA (recien creado) (sin descuento): $" + restaurante.devolverTotalPedido(nroDeOrdenA));

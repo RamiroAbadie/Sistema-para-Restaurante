@@ -8,6 +8,6 @@ public class TotemFactory implements PlataformaFactory {
 
     @Override
     public ValidadorCupon crearValidadorCupon() {
-        return null;
+        return new ValidadorCuponNulo();
     }
 }

@@ -24,7 +24,7 @@ public class GestorClientes {
     private GestorClientes(PlataformaFactory factory) {
         this.clientes = new ArrayList<>();
         this.factory = factory;
-        validadorCupon = factory.crearValidadorCupon();
+        this.validadorCupon = factory.crearValidadorCupon();
         // TODO
         /* Aca hay que ver si hacer una lista de notificadores en los que
         se puedan guardar diferentes tipos de notificadores, por el momento
@@ -79,7 +79,14 @@ public class GestorClientes {
         if (cliente == null) {
             throw new NoSuchElementException("No se encontró el cliente solicitado.");
         }
-        cliente.pagarPedido(pedido, validadorCupon);
+        if (cliente.pagarPedido(pedido, validadorCupon)) {
+            notificador.enviarNotificacionPagoConfirmado();
+        }
+        else {
+            //TODO: Esto lo deberia mandar el Notificador
+            //Ahora esta hardcodeado asi que jamas deberia llegar aca
+            System.out.println("No se realizo el pago");
+        }
     }
 
     private Cliente buscarClientePorEmail(String email) {

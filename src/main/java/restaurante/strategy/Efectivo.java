@@ -10,8 +10,9 @@ public class Efectivo implements MedioDePago{
     }
 
     @Override
-    public void pagar(Pedido pedido) {
+    public boolean pagar(Pedido pedido) {
         pedido.setDescuentoAplicado(0.1);
-        System.out.println("Pagando con efectivo: " + moneda + pedido.calcularTotal());
+        System.out.println("💵 Pagando con efectivo: " + moneda + pedido.calcularTotal());
+        return true;
     }
 }

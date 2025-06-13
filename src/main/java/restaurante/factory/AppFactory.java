@@ -21,6 +21,6 @@ public class AppFactory implements PlataformaFactory {
 
     @Override
     public ValidadorCupon crearValidadorCupon() {
-        return null;
+        return new ValidadorCuponReal();
     }
 }

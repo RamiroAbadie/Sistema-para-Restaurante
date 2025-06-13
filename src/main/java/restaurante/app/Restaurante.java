@@ -15,7 +15,6 @@ import java.util.NoSuchElementException;
 public class Restaurante {
     private static Restaurante instancia;
     private final Plataforma plataforma;
-
     private final PlataformaFactory factory;
     private final GestorPedido gestorPedidos;
     private final GestorClientes gestorClientes;

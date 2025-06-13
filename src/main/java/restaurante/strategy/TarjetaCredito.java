@@ -9,7 +9,8 @@ public class TarjetaCredito extends Tarjeta {
     }
 
     @Override
-    public void pagar(Pedido pedido) {
-        System.out.println("Pagando con tarjeta de crédito de " + titular + ": $" + pedido.calcularTotal());
+    public boolean pagar(Pedido pedido) {
+        System.out.println("💳 Pagando con tarjeta de crédito de " + titular + ": $" + pedido.calcularTotal());
+        return true;
     }
 }

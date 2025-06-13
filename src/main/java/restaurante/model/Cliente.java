@@ -37,7 +37,7 @@ public class Cliente {
         pedidos.add(pedido);
     }
 
-    public void pagarPedido(Pedido pedido, ValidadorCupon validadorCupon) {
+    public boolean pagarPedido(Pedido pedido, ValidadorCupon validadorCupon) {
         if (mediosDePago.isEmpty()) {
             throw new IllegalArgumentException("El cliente no tiene medios de pago disponible");
         }
@@ -48,7 +48,7 @@ public class Cliente {
         }
 
         //TODO: Que seleccione un medio de pago
-        mediosDePago.getFirst().pagar(pedido);
+        return mediosDePago.getFirst().pagar(pedido);
     }
 
     public String getNombre() { return nombre; }
