@@ -1,13 +1,14 @@
 package main.java.restaurante.service;
 
+import main.java.restaurante.factory.Notificador;
+import main.java.restaurante.factory.PlataformaFactory;
+import main.java.restaurante.factory.TipoNotificador;
 import main.java.restaurante.model.Pedido;
 import main.java.restaurante.menu.Producto;
 import main.java.restaurante.observer.RelojSistema;
 import main.java.restaurante.observer.PedidoProgramadoObserver;
 import main.java.restaurante.state.EnEspera;
 import main.java.restaurante.state.Entregado;
-import main.java.restaurante.strategy.Notificador;
-import main.java.restaurante.strategy.NotificadorApp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,21 +18,25 @@ import java.util.NoSuchElementException;
 
 public class GestorPedido {
     private static GestorPedido instancia;
+
+    private final PlataformaFactory factory;
     private List<Pedido> pedidos;
     private Notificador notificador;
 
-    private GestorPedido() {
+    private GestorPedido(PlataformaFactory factory) {
         this.pedidos = new ArrayList<>();
+        this.factory = factory;
         // TODO
         /* Aca hay que ver si hacer una lista de notificadores en los que
         se puedan guardar diferentes tipos de notificadores, por el momento
-        solo se puede uno que esta harcodeado aca */
-        this.notificador = new NotificadorApp();
+        solo se puede uno que esta harcodeado aca (se puede cambiar el tipo
+        cambiando el Enum) */
+        this.notificador = factory.crearNotificadorEmpleado(TipoNotificador.APP);
     }
 
-    public static GestorPedido getInstancia() {
+    public static GestorPedido getInstancia(PlataformaFactory factory) {
         if (instancia == null) {
-            instancia = new GestorPedido();
+            instancia = new GestorPedido(factory);
         }
         return instancia;
     }
@@ -59,7 +64,7 @@ public class GestorPedido {
             throw new IllegalStateException("No se puede avanzar un pedido ya entregado.");
         }
         pedido.avanzarEstado();
-        notificador.enviarNotificacion(pedido);
+        notificador.enviarNotificacionAvancePedido(pedido);
     }
 
     public Pedido cancelarPedido(int numeroOrden) {

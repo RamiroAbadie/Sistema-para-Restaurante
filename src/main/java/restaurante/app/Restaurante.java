@@ -1,7 +1,9 @@
 package main.java.restaurante.app;
 
+import main.java.restaurante.factory.AppFactory;
+import main.java.restaurante.factory.PlataformaFactory;
+import main.java.restaurante.factory.TotemFactory;
 import main.java.restaurante.model.*;
-import main.java.restaurante.menu.ItemMenu;
 import main.java.restaurante.menu.Producto;
 import main.java.restaurante.service.*;
 
@@ -12,7 +14,9 @@ import java.util.NoSuchElementException;
 
 public class Restaurante {
     private static Restaurante instancia;
+    private final Plataforma plataforma;
 
+    private final PlataformaFactory factory;
     private final GestorPedido gestorPedidos;
     private final GestorClientes gestorClientes;
     private final GestorPersonal gestorPersonal;
@@ -21,18 +25,24 @@ public class Restaurante {
     private final GestorReporte gestorReporte;
 
 
-    private Restaurante() {
-        this.gestorPedidos = GestorPedido.getInstancia();
-        this.gestorClientes = GestorClientes.getInstancia();
+    private Restaurante(Plataforma plataforma) {
+        if (plataforma == Plataforma.TOTEM) {
+            this.factory = new TotemFactory();
+        } else {
+            this.factory = new AppFactory();
+        }
+        this.plataforma = plataforma;
+        this.gestorPedidos = GestorPedido.getInstancia(factory);
+        this.gestorClientes = GestorClientes.getInstancia(factory);
         this.gestorPersonal = GestorPersonal.getInstancia();
         this.gestorMenu = GestorMenu.getInstancia();
         this.gestorFactura = GestorFactura.getInstancia();
         this.gestorReporte = GestorReporte.getInstancia();
     }
 
-    public static Restaurante getInstancia() {
+    public static Restaurante getInstancia(Plataforma plataforma) {
         if (instancia == null) {
-            instancia = new Restaurante();
+            instancia = new Restaurante(plataforma);
         }
         return instancia;
     }

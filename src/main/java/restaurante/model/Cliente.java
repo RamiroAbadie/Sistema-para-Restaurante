@@ -1,5 +1,6 @@
 package main.java.restaurante.model;
 
+import main.java.restaurante.factory.ValidadorCupon;
 import main.java.restaurante.strategy.*;
 
 import java.math.BigDecimal;
@@ -20,9 +21,7 @@ public class Cliente {
         this.pedidos = new ArrayList<>();
     }
 
-    public void asignarCupon() {
-        // TODO: Aca estaria la logica de creacion de un cupon
-        Cupon cupon = new Cupon(0.15);
+    public void asignarCupon(Cupon cupon) {
         this.cupon = cupon;
     }
 
@@ -38,13 +37,13 @@ public class Cliente {
         pedidos.add(pedido);
     }
 
-    public void pagarPedido(Pedido pedido) {
+    public void pagarPedido(Pedido pedido, ValidadorCupon validadorCupon) {
         if (mediosDePago.isEmpty()) {
             throw new IllegalArgumentException("El cliente no tiene medios de pago disponible");
         }
 
         BigDecimal total = pedido.calcularTotal();
-        if (cupon != null) {
+        if (cupon != null && validadorCupon.validar(cupon.getCodigo())) {
             cupon.aplicarDescuento(pedido);
         }
 

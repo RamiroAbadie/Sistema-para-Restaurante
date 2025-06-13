@@ -1,5 +1,6 @@
 package main.java.restaurante.strategy;
 
+import main.java.restaurante.factory.Notificador;
 import main.java.restaurante.model.Pedido;
 
 public class NotificadorApp implements Notificador {

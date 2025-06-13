@@ -8,7 +8,10 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Restaurante restaurante = Restaurante.getInstancia();
+        //TODO: Seleccionar plataforma (para test descomentar uno por vez)
+        Plataforma plataforma = Plataforma.APP;
+        //Plataforma plataforma = Plataforma.TOTEM;
+        Restaurante restaurante = Restaurante.getInstancia(plataforma);
 
         // === Crear y registrar cliente ===
         restaurante.registrarCliente();
@@ -110,6 +113,7 @@ public class Main {
             System.out.println("=== FIN de los 10 secs ===");
             System.out.println("\n=== Comprobamos estado pedidoC (Pedido que programamos para dentro de 5 segundos): ===");
             System.out.println(restaurante.getPedidos().get(2).getEstado().getNombreEstado());
+            // Aca se podria mover al pedidoC de estados hasta entregarlo y bla bla bla
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
