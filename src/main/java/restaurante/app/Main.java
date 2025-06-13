@@ -1,7 +1,9 @@
 package main.java.restaurante.app;
 
 import main.java.restaurante.model.*;
+import main.java.restaurante.observer.RelojSistema;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Main {
@@ -31,14 +33,23 @@ public class Main {
         restaurante.agregarProductoAlPedido(nroDeOrdenA, "pizza muzzarella", 2);
         restaurante.agregarProductoAlPedido(nroDeOrdenA, "Pizza Napolitana", 1);
 
-        // === B ===
+        // === B (Pedido para cancelar)===
         int nroDeOrdenB = restaurante.crearPedidoParaCliente(clientes.getFirst().getEmail());
         restaurante.agregarProductoAlPedido(nroDeOrdenB, "Hamburguesa Completa", 2);
+
+        // === C (Pedido programado para dentro de 1 min)===
+        LocalDateTime horarioProgramado = LocalDateTime.now().plusSeconds(5);
+        int nroDeOrdenC = restaurante.crearPedidoProgramadoParaCliente(clientes.getFirst().getEmail(), horarioProgramado);
+        restaurante.agregarProductoAlPedido(nroDeOrdenB, "Pizza Muzzarella", 1);
+        restaurante.agregarProductoAlPedido(nroDeOrdenB, "Hamburguesa Completa", 1);
 
         System.out.println("\n=== Comprobamos creacion pedidoA: ===");
         System.out.println("Total del pedidoA (recien creado) (sin descuento): $" + restaurante.devolverTotalPedido(nroDeOrdenA));
         System.out.println("\n=== Comprobamos creacion pedidoB: ===");
         System.out.println("Total del pedidoB (recien creado) (sin descuento): $" + restaurante.devolverTotalPedido(nroDeOrdenB));
+        System.out.println("\n=== Comprobamos creacion pedidoC: ===");
+        System.out.println("Total del pedidoC (recien PROGRAMADO) (sin descuento): $" + restaurante.devolverTotalPedido(nroDeOrdenC));
+
         // === Cancelar pedido B ===
         /* ⚠️ Esta devolviendo Pedido solo para hacer esta prueba, si no deberia ser void ⚠️
             (ROMPE ENCAPSULAMIENTO)
@@ -90,5 +101,18 @@ public class Main {
         // === Generar y mostrar reporte de ventas ===
         int nroReporte = restaurante.generarReporte();
         restaurante.mostrarReporte(nroReporte);
+
+        try {
+            System.out.println("\n=== Estado pedidoC (Pedido que programamos para dentro de 5 segundos): ===");
+            System.out.println(restaurante.getPedidos().get(2).getEstado().getNombreEstado());
+            System.out.println("=== Estamos esperando 10 segundos antes de terminar el main thread: ===");
+            Thread.sleep(10000);
+            System.out.println("=== FIN de los 10 secs ===");
+            System.out.println("\n=== Comprobamos estado pedidoC (Pedido que programamos para dentro de 5 segundos): ===");
+            System.out.println(restaurante.getPedidos().get(2).getEstado().getNombreEstado());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        RelojSistema.getInstance().getScheduler().shutdown();
     }
 }

@@ -130,4 +130,8 @@ public class Restaurante {
     public List<Log> getLogs() {
         return gestorPersonal.getLogs();
     }
+
+    public List<Pedido> getPedidos() {
+        return gestorPedidos.getPedidos();
+    }
 }

@@ -2,7 +2,8 @@ package main.java.restaurante.service;
 
 import main.java.restaurante.model.Pedido;
 import main.java.restaurante.menu.Producto;
-import main.java.restaurante.model.Personal;
+import main.java.restaurante.observer.RelojSistema;
+import main.java.restaurante.observer.PedidoProgramadoObserver;
 import main.java.restaurante.state.EnEspera;
 import main.java.restaurante.state.Entregado;
 import main.java.restaurante.strategy.Notificador;
@@ -43,7 +44,9 @@ public class GestorPedido {
 
     public Pedido crearPedidoProgramado(LocalDateTime horarioProgrmado) {
         Pedido pedido = new Pedido(horarioProgrmado);
-        pedidos.add(pedido);
+        this.pedidos.add(pedido);
+        PedidoProgramadoObserver observer = new PedidoProgramadoObserver(pedido);
+        RelojSistema.getInstance().agregarObservador(observer);
         return pedido;
     }
 

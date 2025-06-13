@@ -32,6 +32,7 @@ public class Pedido {
         this.horarioProgramado = horarioProgramado;
         this.productos = new ArrayList<>();
         this.descuentoAplicado = 0;
+
     }
 
     public void agregarProducto(Producto producto, int cantidad) {

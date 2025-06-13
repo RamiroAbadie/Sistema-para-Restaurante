@@ -13,8 +13,8 @@ public class RelojSistema {
     ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     private RelojSistema() {
-        // Cada 1 minuto
-        scheduler.scheduleAtFixedRate(this::notificarObservadores, 0, 1, TimeUnit.MINUTES);
+        // Cada 1 segundos
+        scheduler.scheduleAtFixedRate(this::notificarObservadores, 0, 1, TimeUnit.SECONDS);
     }
 
     public static RelojSistema getInstance() {
@@ -37,5 +37,12 @@ public class RelojSistema {
         for (PedidoObserver obs : observadores) {
             obs.notificar(ahora);
         }
+    }
+
+    /*⚠️ Probablemente sea mala practica ⚠️
+    pero hago el getter del scheduler para poder hacer el .shutdown en el main
+     */
+    public ScheduledExecutorService getScheduler() {
+        return scheduler;
     }
 }

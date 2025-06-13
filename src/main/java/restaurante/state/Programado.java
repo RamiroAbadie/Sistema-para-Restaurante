@@ -14,9 +14,9 @@ public class Programado extends EstadoPedido {
 
     @Override
     public void tick(Pedido pedido) {
-        pedido.setEstado(new EnEspera());
         //TODO: Esto lo tiene que hacer un notificador:
         System.out.println("Pedido " + pedido.getNumeroOrden() + " activado a EnEspera");
+        pedido.setEstado(new EnEspera());
     }
 
     @Override
