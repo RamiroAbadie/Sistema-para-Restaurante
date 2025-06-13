@@ -4,6 +4,7 @@ import main.java.restaurante.menu.Producto;
 import main.java.restaurante.state.EstadoPedido;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +23,21 @@ public class Pedido {
     }
 
     public void agregarProducto(Producto producto, int cantidad) {
-        ProductoPedido existente = buscarProducto(producto);
-        if (existente != null) {
-            existente.setCantidad(existente.getCantidad() + cantidad);
-        } else {
-            productos.add(new ProductoPedido(producto, cantidad));
+        // Solo si EstadoPedido es EnEspera o Programado
+        if (this.estado.puedeAgregarProducto()){
+            // Buscamos si el producto ya esta en el pedido
+            ProductoPedido existente = buscarProducto(producto);
+            if (existente != null) {
+                existente.setCantidad(existente.getCantidad() + cantidad);
+                //TODO: Este mensaje lo debe dar un Notificador
+                System.out.println("➕ Producto: " + producto.getNombre() + " agregado con exito! 🫡");
+            } else {
+                productos.add(new ProductoPedido(producto, cantidad));
+            }
+        }
+        else {
+            //TODO: Este mensaje lo debe dar un Notificador
+            System.out.println("Ya no es posible agregar mas productos 😞✊");
         }
     }
 
@@ -52,6 +63,15 @@ public class Pedido {
         estado.avanzarPedido(this);
     }
 
+    public Pedido cancelar(){
+        this.estado.puedeCancelar(this);
+        return this;
+    }
+
+    public void tick(LocalDateTime ahora){
+        this.estado.tick(this, ahora);
+    }
+
     public void setEstado(EstadoPedido nuevoEstado) {
         this.estado = nuevoEstado;
     }
@@ -60,7 +80,7 @@ public class Pedido {
         if (descuentoAplicado>0){
             this.descuentoAplicado += descuentoAplicado;
         }
-        else{
+        else {
             this.descuentoAplicado = descuentoAplicado;
         }
     }

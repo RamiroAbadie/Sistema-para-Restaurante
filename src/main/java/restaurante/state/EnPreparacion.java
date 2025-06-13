@@ -2,6 +2,8 @@ package main.java.restaurante.state;
 
 import main.java.restaurante.model.Pedido;
 
+import java.time.LocalDateTime;
+
 public class EnPreparacion extends EstadoPedido {
     @Override
     public void avanzarPedido(Pedido pedido) {
@@ -9,7 +11,10 @@ public class EnPreparacion extends EstadoPedido {
     }
 
     @Override
+    public boolean puedeCancelar(Pedido pedido) { return true; }
+
+    @Override
     public String getNombreEstado() {
-        return "En preparación";
+        return "🧑‍🍳 En preparación";
     }
 }

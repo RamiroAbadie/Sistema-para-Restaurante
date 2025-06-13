@@ -42,6 +42,11 @@ public class Restaurante {
         return pedido.getNumeroOrden();
     }
 
+    //Devuelve Pedido solo para prueba, si no void
+    public Pedido cancelarPedido(int nroOrden){
+        return gestorPedidos.cancelarPedido(nroOrden);
+    }
+
     public void agregarProductoAlPedido(int numeroOrden, String nombreProducto, int cantidad) {
         Producto producto = gestorMenu.buscarProductoPorNombre(nombreProducto);
         if (producto == null) {

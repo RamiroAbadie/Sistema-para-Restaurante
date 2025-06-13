@@ -27,7 +27,7 @@ public class GestorReporte {
 
     public int generarReporte(List<Pedido> pedidos) {
         List<Pedido> entregados = pedidos.stream()
-                .filter(p -> p.getEstadoActual().equals("Entregado"))
+                .filter(p -> p.getEstadoActual().equals("✅ Entregado"))
                 .collect(Collectors.toList());
 
         Reporte nuevo = new Reporte(entregados);
@@ -38,7 +38,7 @@ public class GestorReporte {
     public void mostrarReportePorId(int numeroReporte){
         Reporte reporte = buscarReportePorId(numeroReporte);
         if (reporte == null) {
-            throw new NoSuchElementException("No se encontró la factura solicitada.");
+            throw new NoSuchElementException("No se encontró el reporte solicitado.");
         }
         reporte.mostrar();
     }

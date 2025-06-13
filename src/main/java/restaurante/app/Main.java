@@ -25,28 +25,53 @@ public class Main {
         restaurante.agregarMedioDePago(clientes.getFirst().getEmail());
         restaurante.asignarCupon(clientes.getFirst().getEmail());
 
-        // === Crear pedido y agregar productos ===
-        int nroDeOrden = restaurante.crearPedidoParaCliente(clientes.getFirst().getEmail());
-        restaurante.agregarProductoAlPedido(nroDeOrden, "pizza muzzarella", 2);
+        // === Crear pedidos y agregar productos ===
+        // === A ===
+        int nroDeOrdenA = restaurante.crearPedidoParaCliente(clientes.getFirst().getEmail());
+        restaurante.agregarProductoAlPedido(nroDeOrdenA, "pizza muzzarella", 2);
+        restaurante.agregarProductoAlPedido(nroDeOrdenA, "Pizza Napolitana", 1);
 
-        System.out.println("\nTotal del pedido (sin descuento): $" + restaurante.devolverTotalPedido(nroDeOrden));
+        // === B ===
+        int nroDeOrdenB = restaurante.crearPedidoParaCliente(clientes.getFirst().getEmail());
+        restaurante.agregarProductoAlPedido(nroDeOrdenB, "Hamburguesa Completa", 2);
 
-        // === Pagar y notificar ===
-        restaurante.clientePagarPedido(nroDeOrden, clientes.getFirst().getEmail());
+        System.out.println("\n=== Comprobamos creacion pedidoA: ===");
+        System.out.println("Total del pedidoA (recien creado) (sin descuento): $" + restaurante.devolverTotalPedido(nroDeOrdenA));
+        System.out.println("\n=== Comprobamos creacion pedidoB: ===");
+        System.out.println("Total del pedidoB (recien creado) (sin descuento): $" + restaurante.devolverTotalPedido(nroDeOrdenB));
+        // === Cancelar pedido B ===
+        /* ⚠️ Esta devolviendo Pedido solo para hacer esta prueba, si no deberia ser void ⚠️
+            (ROMPE ENCAPSULAMIENTO)
+        */
+        System.out.println("\n=== Cancelamos pedidoB: ===");
+        Pedido pedidoBTest = restaurante.cancelarPedido(nroDeOrdenB);
+        System.out.println(pedidoBTest.getEstado().getNombreEstado());
+        System.out.println("===============\n");
 
         // === Crear y agregar personal ===
         restaurante.agregarPersonal();
         List<Personal> empleados = restaurante.getEmpleados();
-        System.out.println("\n=== Nombre Personal (Mesero) creado: ===");
-        System.out.println(empleados.getFirst().getNombre());
+        System.out.println("\n=== Personal (Mesero) creado: ===");
+        System.out.println("Nombre: " + empleados.getFirst().getNombre());
+        System.out.println("Legajo/Id: " + empleados.getFirst().getId());
         System.out.println("======\n");
 
-        // === Avanzar estado y notificar ===
-        restaurante.avanzarEstadoPedido("ABC123", nroDeOrden); // En preparación
-        restaurante.avanzarEstadoPedido("ABC123", nroDeOrden); // Listo para entregar
-        restaurante.avanzarEstadoPedido("ABC123", nroDeOrden); // Entregado
+        // === Avanzar estado y notificar ; Agregar productos ===
+        System.out.println("=== Intentamos agregar producto a pedidoA (1 Pizza Napo): ===");
+        restaurante.agregarProductoAlPedido(nroDeOrdenA, "Pizza Napolitana", 1);
+        System.out.println("=============================");
+        restaurante.avanzarEstadoPedido("ABC123", nroDeOrdenA); // En preparación
+        System.out.println("=== Intentamos agregar producto a pedidoA (1 Pizza Napo): ===");
+        restaurante.agregarProductoAlPedido(nroDeOrdenA, "Pizza Napolitana", 1);
+        System.out.println("=============================");
+        restaurante.avanzarEstadoPedido("ABC123", nroDeOrdenA); // Listo para entregar
+        restaurante.avanzarEstadoPedido("ABC123", nroDeOrdenA); // Entregado
         // Descomentar si se quiere probar avanzar pedido entregado:
         //restaurante.avanzarEstadoPedido("ABC123", nroDeOrden);
+
+        // === Pagar y notificar ===
+        System.out.println("\n=== Cliente paga pedido: ===");
+        restaurante.clientePagarPedido(nroDeOrdenA, clientes.getFirst().getEmail());
 
         System.out.println("\n=== Logs (Quien avanzo que pedido y de que estado): ===");
         List<Log> logs = restaurante.getLogs();
@@ -59,7 +84,7 @@ public class Main {
         }
 
         // === Emitir factura ===
-        int nroFactura = restaurante.generarFactura(nroDeOrden);
+        int nroFactura = restaurante.generarFactura(nroDeOrdenA);
         restaurante.mostrarFactura(nroFactura);
 
         // === Generar y mostrar reporte de ventas ===

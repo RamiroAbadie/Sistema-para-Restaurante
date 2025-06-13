@@ -52,6 +52,14 @@ public class GestorPedido {
         notificador.enviarNotificacion(pedido);
     }
 
+    public Pedido cancelarPedido(int numeroOrden){
+        Pedido pedido = buscarPedidoPorId(numeroOrden);
+        if (pedido == null) {
+            throw new NoSuchElementException("No se encontró el pedido solicitado.");
+        }
+        return pedido.cancelar();
+    }
+
     public void agregarProductoAlPedido(int numeroOrden, Producto producto, int cantidad) {
         Pedido pedido = buscarPedidoPorId(numeroOrden);
         if (pedido == null) {
