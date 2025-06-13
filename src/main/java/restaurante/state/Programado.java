@@ -5,12 +5,6 @@ import main.java.restaurante.model.Pedido;
 import java.time.LocalDateTime;
 
 public class Programado extends EstadoPedido {
-    private LocalDateTime fechaEjecucion;
-
-    public Programado(LocalDateTime fechaEjecucion) {
-        this.fechaEjecucion = fechaEjecucion;
-    }
-
     @Override
     public void avanzarPedido(Pedido pedido) {
         /* Vacio, no nos sirve en esta clase
@@ -19,11 +13,10 @@ public class Programado extends EstadoPedido {
     }
 
     @Override
-    public void tick(Pedido pedido, LocalDateTime ahora) {
-        if(!ahora.isBefore(this.fechaEjecucion)){
-            pedido.setEstado(new EnEspera());
-            System.out.println("Pedido " + pedido.getNumeroOrden() + " activado a EnEspera");
-        }
+    public void tick(Pedido pedido) {
+        pedido.setEstado(new EnEspera());
+        //TODO: Esto lo tiene que hacer un notificador:
+        System.out.println("Pedido " + pedido.getNumeroOrden() + " activado a EnEspera");
     }
 
     @Override
@@ -40,9 +33,5 @@ public class Programado extends EstadoPedido {
     @Override
     public String getNombreEstado() {
         return "⏲️ Programado";
-    }
-
-    public LocalDateTime getFechaEjecucion() {
-        return fechaEjecucion;
     }
 }

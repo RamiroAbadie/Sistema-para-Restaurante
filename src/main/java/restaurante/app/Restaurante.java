@@ -6,6 +6,7 @@ import main.java.restaurante.menu.Producto;
 import main.java.restaurante.service.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -38,6 +39,12 @@ public class Restaurante {
 
     public int crearPedidoParaCliente(String email) {
         Pedido pedido = gestorPedidos.crearPedido();
+        gestorClientes.asignarPedido(email, pedido);
+        return pedido.getNumeroOrden();
+    }
+
+    public int crearPedidoProgramadoParaCliente(String email, LocalDateTime horarioProgramado) {
+        Pedido pedido = gestorPedidos.crearPedidoProgramado(horarioProgramado);
         gestorClientes.asignarPedido(email, pedido);
         return pedido.getNumeroOrden();
     }

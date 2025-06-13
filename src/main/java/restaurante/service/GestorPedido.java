@@ -9,6 +9,7 @@ import main.java.restaurante.strategy.Notificador;
 import main.java.restaurante.strategy.NotificadorApp;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -40,6 +41,12 @@ public class GestorPedido {
         return pedido;
     }
 
+    public Pedido crearPedidoProgramado(LocalDateTime horarioProgrmado) {
+        Pedido pedido = new Pedido(horarioProgrmado);
+        pedidos.add(pedido);
+        return pedido;
+    }
+
     public void avanzarEstadoPedido(int numeroOrden) {
         Pedido pedido = buscarPedidoPorId(numeroOrden);
         if (pedido == null) {
@@ -52,7 +59,7 @@ public class GestorPedido {
         notificador.enviarNotificacion(pedido);
     }
 
-    public Pedido cancelarPedido(int numeroOrden){
+    public Pedido cancelarPedido(int numeroOrden) {
         Pedido pedido = buscarPedidoPorId(numeroOrden);
         if (pedido == null) {
             throw new NoSuchElementException("No se encontró el pedido solicitado.");
@@ -71,7 +78,7 @@ public class GestorPedido {
         pedido.agregarProducto(producto, cantidad);
     }
 
-    public BigDecimal getTotalPedido(int numeroOrden){
+    public BigDecimal getTotalPedido(int numeroOrden) {
         Pedido pedido = buscarPedidoPorId(numeroOrden);
         if (pedido == null) {
             throw new NoSuchElementException("No se encontró el pedido solicitado.");
@@ -82,7 +89,7 @@ public class GestorPedido {
         return pedido.calcularTotal();
     }
 
-    public Pedido getPedidoById(int numeroOrden){
+    public Pedido getPedidoById(int numeroOrden) {
         Pedido pedido = buscarPedidoPorId(numeroOrden);
         if (pedido == null) {
             throw new NoSuchElementException("No se encontró el pedido solicitado.");

@@ -2,6 +2,7 @@ package main.java.restaurante.model;
 
 import main.java.restaurante.menu.Producto;
 import main.java.restaurante.state.EstadoPedido;
+import main.java.restaurante.state.Programado;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,12 +13,23 @@ public class Pedido {
     private static int contadorPedidos = 1;
     private final int numeroOrden;
     private EstadoPedido estado;
+    private LocalDateTime horarioProgramado;
     private double descuentoAplicado;
     private List<ProductoPedido> productos;
 
     public Pedido(EstadoPedido estadoInicial) {
         this.numeroOrden = contadorPedidos++;
         this.estado = estadoInicial;
+        this.horarioProgramado = LocalDateTime.now();
+        this.productos = new ArrayList<>();
+        this.descuentoAplicado = 0;
+    }
+
+    // Constructor SOLO para Pedidos programados
+    public Pedido(LocalDateTime horarioProgramado) {
+        this.numeroOrden = contadorPedidos++;
+        this.estado = new Programado();
+        this.horarioProgramado = horarioProgramado;
         this.productos = new ArrayList<>();
         this.descuentoAplicado = 0;
     }
@@ -63,13 +75,13 @@ public class Pedido {
         estado.avanzarPedido(this);
     }
 
-    public Pedido cancelar(){
+    public Pedido cancelar() {
         this.estado.puedeCancelar(this);
         return this;
     }
 
-    public void tick(LocalDateTime ahora){
-        this.estado.tick(this, ahora);
+    public void tick(){
+        this.estado.tick(this);
     }
 
     public void setEstado(EstadoPedido nuevoEstado) {
@@ -103,5 +115,9 @@ public class Pedido {
 
     public double getDescuentoAplicado() {
         return descuentoAplicado;
+    }
+
+    public LocalDateTime getHorarioProgramado() {
+        return horarioProgramado;
     }
 }
